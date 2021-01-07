@@ -3,10 +3,10 @@
 
     Functions implemented:
         - ReLU
-    To be implemented:
         - Sigmoid
-        - Softmax
         - TanH
+    To be implemented:
+        - Softmax
 
 """
 
