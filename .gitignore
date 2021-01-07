@@ -1,0 +1,9 @@
+
+.idea/misc.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/Neural-Networks-From-Scratch.iml
+.idea/workspace.xml
+__pycache__/ActivationFunctions.cpython-37.pyc
+__pycache__/Layer.cpython-37.pyc
+__pycache__/NeuralNetwork.cpython-37.pyc
