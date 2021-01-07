@@ -2,6 +2,7 @@ import numpy as np
 from ActivationFunctions import ReLU
 from ActivationFunctions import sigmoid
 from ActivationFunctions import tanh
+from ActivationFunctions import softmax
 np.random.seed(0)
 """
     With this class we create the layers that will go in the neural network
@@ -35,5 +36,16 @@ class Dense:
             activation = sigmoid
         elif self.acFunction == "tanh":
             activation = tanh
+        elif self.acFunction == "softmax":
+            activation = softmax
         self.output = activation(self.output)
 
+"""   Testing section   """
+
+i = [2, 3, 2.5]
+l1 = Dense(3, 4, "ReLU")
+l1.forward(i)
+l2 = Dense(4, 2, "softmax")
+l2.forward(l1.output)
+print(l1.output)
+print(l2.output)
