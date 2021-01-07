@@ -15,7 +15,7 @@ import numpy as np
 """
     The ReLU function outputs the maximum between a value and 0
         f(x) = max(x, 0)
-    The ReLU function is a simple function, but in can do a lot of things
+    The ReLU function is a simple function, but in can do a lot of things if used more than once
 """
 
 def ReLU(layer):
