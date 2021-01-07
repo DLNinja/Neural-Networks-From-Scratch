@@ -1,5 +1,8 @@
 import numpy as np
-
+from ActivationFunctions import ReLU
+from ActivationFunctions import sigmoid
+from ActivationFunctions import tanh
+np.random.seed(0)
 """
     With this class we create the layers that will go in the neural network
     Every layer will have their own bias, and a set of weights between them and the prior layer
@@ -8,12 +11,29 @@ import numpy as np
     This is not the final form, I'll add much more in the future
 """
 
+"""
+    Our Dense class creates the layer, taking as parameters the folowing:
+        - inputSize: the size of the array which is the previous layer
+        - layerSize: the size of the actual layer
+        - activation: this specifies the activation function we'll use for this layer
+        - weightBounds: the interval in which all weights will be initialized
+"""
+
 class Dense:
-    def __init__(self, inputSize, layerSize):
+    def __init__(self, inputSize, layerSize, activation="sigmoid", weightBounds=(-1, 1)):
         self.x = inputSize
         self.y = layerSize
-        self.weights = np.random.randn(inputSize, layerSize)
+        self.weights = np.random.uniform(weightBounds[0], weightBounds[1], (inputSize, layerSize))
         self.bias = 1
+        self.acFunction = activation
 
     def forward(self, inputLayer):
-        self.output = np.dot(inputLayer, self.weights) + self.bias
+        self.output = np.dot(inputLayer, self.weights)
+        if self.acFunction == "ReLU":
+            activation = ReLU
+        elif self.acFunction == "sigmoid":
+            activation = sigmoid
+        elif self.acFunction == "tanh":
+            activation = tanh
+        self.output = activation(self.output)
+
