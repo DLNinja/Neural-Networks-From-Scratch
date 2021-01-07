@@ -3,10 +3,17 @@
 
     Functions implemented:
         - ReLU
+<<<<<<< HEAD
         - TanH
         - Sigmoid
         - Softmax
         (There will be more)
+=======
+        - Sigmoid
+        - TanH
+    To be implemented:
+        - Softmax
+>>>>>>> bd9519937221a281b226dc01ba479d078e100a4d
 
     You'll see me use the function exp(x), this means Euler's number, e, to the power of x: e**x, where e = 2.718...
 """
@@ -16,7 +23,7 @@ import numpy as np
 """
     The ReLU function outputs the maximum between a value and 0
         f(x) = max(x, 0)
-    The ReLU function is a simple function, but in can do a lot of things
+    The ReLU function is a simple function, but in can do a lot of things if used more than once
 """
 
 def ReLU(layer):

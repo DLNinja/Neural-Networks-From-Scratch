@@ -7,4 +7,8 @@
 __pycache__/ActivationFunctions.cpython-37.pyc
 __pycache__/Layer.cpython-37.pyc
 __pycache__/NeuralNetwork.cpython-37.pyc
+<<<<<<< HEAD
 .idea/inspectionProfiles/Project_Default.xml
+=======
+
+>>>>>>> bd9519937221a281b226dc01ba479d078e100a4d
