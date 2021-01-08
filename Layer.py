@@ -6,7 +6,7 @@ from ActivationFunctions import softmax
 np.random.seed(0)
 """
     With this class we create the layers that will go in the neural network
-    Every layer will have their own bias, and a set of weights between them and the prior layer
+    Every layer will have their own set of biases, and a set of weights between them and the prior layer
     This set of weights is different for every pair of layers, it has random values in the start, but this values
     will be changed after each backpropagation process.
     This is not the final form, I'll add much more in the future
@@ -25,11 +25,11 @@ class Dense:
         self.x = inputSize
         self.y = layerSize
         self.weights = np.random.uniform(weightBounds[0], weightBounds[1], (inputSize, layerSize))
-        self.bias = 1
+        self.biases = np.zeros((layerSize,))
         self.acFunction = activation
 
-    def forward(self, inputLayer):
-        self.output = np.dot(inputLayer, self.weights)
+    def forward(self, inputLayer):  # weights and input layer are multiplied and than the activation function is applied
+        self.output = np.add(np.dot(inputLayer, self.weights), self.biases)
         if self.acFunction == "ReLU":
             activation = ReLU
         elif self.acFunction == "sigmoid":
@@ -40,12 +40,13 @@ class Dense:
             activation = softmax
         self.output = activation(self.output)
 
+
 """   Testing section   """
 
-i = [2, 3, 2.5]
-l1 = Dense(3, 4, "ReLU")
-l1.forward(i)
-l2 = Dense(4, 2, "softmax")
-l2.forward(l1.output)
-print(l1.output)
-print(l2.output)
+# i = [2, 3, 2.5]
+# l1 = Dense(3, 4, "ReLU")
+# l1.forward(i)
+# l2 = Dense(4, 2, "softmax")
+# l2.forward(l1.output)
+# #print(l1.output)
+# #print(l2.output)
