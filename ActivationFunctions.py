@@ -19,8 +19,8 @@ import numpy as np
     The ReLU function is a simple function, but in can do a lot of things if used more than once
 """
 
-def ReLU(layer):
-    return np.array([max(i, 0) for i in layer])
+def ReLU(x):
+    return max(0, x)
 
 
 """
@@ -29,9 +29,9 @@ def ReLU(layer):
     This function will output values between 0 and 1
 """
 
-def sigmoid(layer):
-    exp = np.array([np.e**(-x) for x in layer])
-    return np.array([1/(1+x) for x in exp])
+def sigmoid(x):
+    return 1/(1+np.e**(-x))
+
 
 """
     TanH function looks something like this:
@@ -39,13 +39,9 @@ def sigmoid(layer):
     This function will output values between -1 and 1
 """
 
-def tanh(layer):
-    result = []
-    expMinus = np.array([np.e**(-x) for x in layer])
-    expPlus = np.array([np.e**x for x in layer])
-    for (x, y) in zip(expPlus, expMinus):
-        result.append((x-y)/(x+y))
-    return np.array(result)
+def tanh(x):
+    return (np.e**x - np.e**(-x))/(np.e**x + np.e**(-x))
+
 
 """
     The Softmax function rescales an input Tensor such that the elements are between 0 and 1 and sum to 1
