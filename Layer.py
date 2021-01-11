@@ -31,14 +31,13 @@ class Dense:
     def forward(self, inputLayer):  # weights and input layer are multiplied and than the activation function is applied
         self.output = np.add(np.dot(inputLayer, self.weights), self.biases)
         if self.acFunction == "ReLU":
-            activation = ReLU
-        elif self.acFunction == "sigmoid":
-            activation = sigmoid
+            self.output = np.array([ReLU(x) for x in self.output])
         elif self.acFunction == "tanh":
-            activation = tanh
+            self.output = np.array([tanh(x) for x in self.output])
         elif self.acFunction == "softmax":
-            activation = softmax
-        self.output = activation(self.output)
+            self.output = softmax(self.output)
+        else:
+            self.output = np.array([sigmoid(x) for x in self.output])
 
 
 """   Testing section   """
