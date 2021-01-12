@@ -22,6 +22,9 @@ import numpy as np
 def ReLU(x):
     return max(0, x)
 
+def ReLU_Prime(x):
+    return 1 if x > 0 else 0
+
 
 """
     Sigmoid function looks something like this:
@@ -30,8 +33,10 @@ def ReLU(x):
 """
 
 def sigmoid(x):
-    return 1/(1+np.e**(-x))
+    return 1 / (1 + np.e**(-x))
 
+def sigmoid_prime(x):
+    return sigmoid(x)/(1 - sigmoid(x))
 
 """
     TanH function looks something like this:
@@ -42,6 +47,9 @@ def sigmoid(x):
 def tanh(x):
     return (np.e**x - np.e**(-x))/(np.e**x + np.e**(-x))
 
+
+def tanh_prime(x):
+    return 1-tanh(x)**2
 
 """
     The Softmax function rescales an input Tensor such that the elements are between 0 and 1 and sum to 1
