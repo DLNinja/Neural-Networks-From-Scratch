@@ -1,8 +1,5 @@
 import numpy as np
-from ActivationFunctions import ReLU
-from ActivationFunctions import sigmoid
-from ActivationFunctions import tanh
-from ActivationFunctions import softmax
+from ActivationFunctions import *
 np.random.seed(0)
 """
     With this class we create the layers that will go in the neural network
@@ -26,18 +23,22 @@ class Dense:
         self.y = layerSize
         self.weights = np.random.uniform(weightBounds[0], weightBounds[1], (inputSize, layerSize))
         self.biases = np.zeros((layerSize,))
-        self.acFunction = activation
+        self.activation = activation
+        self.derivative = activation
 
     def forward(self, inputLayer):  # weights and input layer are multiplied and than the activation function is applied
         self.output = np.add(np.dot(inputLayer, self.weights), self.biases)
-        if self.acFunction == "ReLU":
+        if self.activation == "ReLU":
+            self.derivative = ReLU_prime
             self.output = np.array([ReLU(x) for x in self.output])
-        elif self.acFunction == "tanh":
+        elif self.activation == "tanh":
             self.output = np.array([tanh(x) for x in self.output])
-        elif self.acFunction == "softmax":
+            self.derivative = tanh_prime
+        elif self.activation == "softmax":
             self.output = softmax(self.output)
         else:
             self.output = np.array([sigmoid(x) for x in self.output])
+            self.derivative = sigmoid_prime
 
 
 """   Testing section   """
