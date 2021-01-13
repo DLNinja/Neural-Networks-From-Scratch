@@ -22,6 +22,7 @@ class NeuralNetworkModel:
         for newLayer in self.layers:
             newLayer.forward(priorLayer)
             priorLayer = newLayer.output
+        return newLayer.output
 
 
 """ 
@@ -33,4 +34,5 @@ class NeuralNetworkModel:
 t = NeuralNetworkModel(3, 2)
 t.add(Dense(3, 4, "ReLU"))
 t.add(Dense(4, 2, "softmax"))
-t.feedforward([2, 3, 2.5])
+y = t.feedforward([2, 3, 2.5])
+print(y)
