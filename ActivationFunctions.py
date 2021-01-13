@@ -22,7 +22,7 @@ import numpy as np
 def ReLU(x):
     return max(0, x)
 
-def ReLU_Prime(x):
+def ReLU_prime(x):
     return 1 if x > 0 else 0
 
 
