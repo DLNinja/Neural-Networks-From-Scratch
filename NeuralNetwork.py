@@ -1,5 +1,6 @@
 import numpy as np
 from Layer import Dense
+from LossFunctions import *
 
 """
     This is the Neural Network class itself.
@@ -24,6 +25,16 @@ class NeuralNetworkModel:
             priorLayer = newLayer.output
         return newLayer.output
 
+    def backprop(self, x, y): # Ah, yess, the most important step ( which involves a lot of math)
+        # for now, it is in progress
+        b_change = [np.zeros(b.biases.shape) for b in self.layers]
+        w_change = [np.zeros(w.weights.shape) for w in self.layers]
+        self.feedforward(x)
+        delta = (self.layers[-1].output - y)
+        b_change = delta
+        #w_change = np.dot(delta, self.layers[-2].output)
+        return b_change, w_change
+
 
 """ 
     Testing section
@@ -34,5 +45,4 @@ class NeuralNetworkModel:
 t = NeuralNetworkModel(3, 2)
 t.add(Dense(3, 4, "ReLU"))
 t.add(Dense(4, 2, "softmax"))
-y = t.feedforward([2, 3, 2.5])
-print(y)
+print(t.backprop([2, 3, 2.5], [1, 0]))
