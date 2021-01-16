@@ -21,32 +21,21 @@ class Dense:
     def __init__(self, inputSize, layerSize, activation="sigmoid", weightBounds=(-1, 1)):
         self.x = inputSize
         self.y = layerSize
-        self.weights = np.random.uniform(weightBounds[0], weightBounds[1], (inputSize, layerSize))
-        self.biases = np.zeros((layerSize,))
+        self.weights = np.random.uniform(weightBounds[0], weightBounds[1], (layerSize, inputSize))
+        self.biases = np.zeros((layerSize, 1))
         self.activation = activation
         self.derivative = activation
 
     def forward(self, inputLayer):  # weights and input layer are multiplied and than the activation function is applied
-        self.output = np.add(np.dot(inputLayer, self.weights), self.biases)
+        self.z = np.dot(self.weights, inputLayer) + self.biases # the layer before applying the activation function
         if self.activation == "ReLU":
             self.derivative = ReLU_prime
-            self.output = np.array([ReLU(x) for x in self.output])
+            self.output = np.array([ReLU(x) for x in self.z])
         elif self.activation == "tanh":
-            self.output = np.array([tanh(x) for x in self.output])
+            self.output = np.array([tanh(x) for x in self.z])
             self.derivative = tanh_prime
         elif self.activation == "softmax":
-            self.output = softmax(self.output)
+            self.output = softmax(self.z)
         else:
-            self.output = np.array([sigmoid(x) for x in self.output])
+            self.output = np.array([sigmoid(x) for x in self.z])
             self.derivative = sigmoid_prime
-
-
-"""   Testing section   """
-
-# i = [2, 3, 2.5]
-# l1 = Dense(3, 4, "ReLU")
-# l1.forward(i)
-# l2 = Dense(4, 2, "softmax")
-# l2.forward(l1.output)
-# #print(l1.output)
-# #print(l2.output)
