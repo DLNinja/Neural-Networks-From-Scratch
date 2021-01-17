@@ -2,7 +2,6 @@ import numpy as np
 from Layer import Dense
 from LossFunctions import *
 from ActivationFunctions import *
-import matplotlib.pyplot as plt
 
 """
     This is the Neural Network class itself.
@@ -33,8 +32,11 @@ class NeuralNetworkModel:
         b_change = [np.zeros(b.biases.shape) for b in self.layers]
         w_change = [np.zeros(w.weights.shape) for w in self.layers]
         # we apply feedforward on the layers, and then start the backprop part
-        delta = np.array(self.feedforward(x) - y) * sigmoid_prime(self.layers[-1].z)
-        outputs = [np.array(x)] # this array takes the layers after activation function
+
+        # for now, it only works with ReLU
+
+        delta = np.array(self.feedforward(x) - y) * ReLU(self.layers[-1].z)
+        outputs = [np.array(x)]  # this array takes the layers after activation function
         zs = []  # this array takes the layers before activation function
         for l in self.layers:
             zs.append(l.z)
@@ -42,40 +44,33 @@ class NeuralNetworkModel:
         b_change[-1] = delta
         w_change[-1] = np.dot(delta, outputs[-2].T)
         for l in range(2, len(self.layers)+1):
-            prime = sigmoid_prime(zs[-l])
+            prime = ReLU_prime(zs[-l])
             delta = np.dot(self.layers[-l+1].weights.T, delta) * prime
             b_change[-l] = delta
             w_change[-l] = np.dot(delta, outputs[-l-1].T)
         return w_change, b_change
 
+    def update_batch(self, xt, yt):
+        b_change = [np.zeros(b.biases.shape) for b in self.layers]
+        w_change = [np.zeros(w.weights.shape) for w in self.layers]
+        for i in range(len(xt)):
+            x = [[k] for k in xt[i]]
+            y = [[k] for k in yt[i]]
+            dw, db = self.backprop(x, y)
+            b_change += db
+            w_change += dw
+        return w_change, b_change
+            # for (l, w, b) in zip(self.layers, dw, db):
+            # l.weights = l.weights - alpha * w
+            # l.biases = l.biases - alpha * b
+
     # this is a simplified version of the train method, for now it works with just 1 input
-    def train(self, x, y, it, alpha):
-        accL1 = []
+    def train(self, xt, yt, it, alpha):
+        acc = []
         for i in range(it):
-            dw, db = t.backprop(x, y)
+            dw, db = self.update_batch(xt, yt)
             for (l, w, b) in zip(self.layers, dw, db):
                 l.weights = l.weights - alpha * w
                 l.biases = l.biases - alpha * b
-            accL1.append(L1(self.layers[-1].output, y))
-        return self.feedforward(x), accL1
-
-
-
-""" 
-    Testing section
-"""
-
-iterations = 100
-alpha = 0.01
-t = NeuralNetworkModel(3, 2)
-t.add(Dense(3, 4, "sigmoid"))
-t.add(Dense(4, 2, "softmax"))
-result, x = t.train([[2], [3], [2.5]], [[0], [1]], iterations, alpha)
-plt.suptitle("Neural Net")
-plt.xlabel("Iteration")
-plt.ylabel("Loss")
-plt.plot(x)
-plt.show()
-print(result)
-a = t.feedforward([[6],[1],[10]])
-print(a)
+            acc.append(L1(self.feedforward([[k] for k in xt[0]]), [[k] for k in yt[0]]))
+        return acc
