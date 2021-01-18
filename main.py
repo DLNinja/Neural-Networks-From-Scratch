@@ -12,8 +12,8 @@ from Layer import *
 iterations = 100
 alpha = 0.1
 t = NeuralNetworkModel(3, 2)
-t.add(Dense(3, 4, "ReLU"))
-t.add(Dense(4, 2, "softmax"))
+t.add(Dense(4, "ReLU"))
+t.add(Dense(2, "softmax"))
 x_train = [[2, 3, 2.5], [10, 12, 16]]
 y_train = [[0, 1], [1, 0]]
 x = t.train(x_train, y_train, iterations, alpha)
