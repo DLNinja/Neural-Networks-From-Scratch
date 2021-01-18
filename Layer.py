@@ -21,6 +21,7 @@ np.random.seed(0)
 class Dense:
     def __init__(self, layerSize, activation="sigmoid", weightBounds=(-1, 1)):
         self.length = layerSize
+
         # self.weights = np.random.uniform(weightBounds[0], weightBounds[1], (layerSize, inputSize))
         # self.biases = np.zeros((layerSize, 1))
         self.activation = activation
