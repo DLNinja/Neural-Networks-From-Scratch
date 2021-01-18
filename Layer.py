@@ -1,7 +1,7 @@
 import numpy as np
 from ActivationFunctions import *
 from LossFunctions import *
-np.random.seed(0)
+
 """
     With this class we create the layers that will go in the neural network
     Every layer will have their own set of biases, and a set of weights between them and the prior layer
@@ -21,6 +21,7 @@ np.random.seed(0)
 class Dense:
     def __init__(self, layerSize, activation="sigmoid", weightBounds=(-1, 1)):
         self.length = layerSize
+        self.bounds = weightBounds
 
         # self.weights = np.random.uniform(weightBounds[0], weightBounds[1], (layerSize, inputSize))
         # self.biases = np.zeros((layerSize, 1))
