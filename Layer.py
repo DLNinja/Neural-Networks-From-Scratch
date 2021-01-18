@@ -12,7 +12,6 @@ from LossFunctions import *
 
 """
     Our Dense class creates the layer, taking as parameters the folowing:
-        - inputSize: the size of the array which is the previous layer
         - layerSize: the size of the actual layer
         - activation: this specifies the activation function we'll use for this layer
         - weightBounds: the interval in which all weights will be initialized
