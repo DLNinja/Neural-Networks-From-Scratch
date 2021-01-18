@@ -12,10 +12,10 @@ from Layer import *
 iterations = 100
 alpha = 0.1
 t = NeuralNetworkModel(3, 2)
-t.add(Dense(4, "ReLU"))
-t.add(Dense(2, "softmax"))
+t.add(Dense(4, "relu"))
+t.add(Dense(2, "tanh"))
 x_train = [[2, 3, 2.5], [10, 12, 16]]
-y_train = [[0, 1], [1, 0]]
+y_train = [[0, 1], [0, 1]]
 x = t.train(x_train, y_train, iterations, alpha)
 
 plt.suptitle("Neural Net")
@@ -24,8 +24,9 @@ plt.ylabel("Loss")
 plt.plot(x)
 plt.show()
 
+#print(t.feedforward([2, 3, 2.5]))
+
 # plt.figure(figsize=(9, 3))
-#
 # plt.subplot(121)
 # plt.plot(x[0])
 # plt.subplot(122)

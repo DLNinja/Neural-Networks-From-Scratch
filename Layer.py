@@ -26,7 +26,7 @@ class Dense:
         # self.biases = np.zeros((layerSize, 1))
         self.activation = activation
         self.derivative = activation
-        if self.activation == "ReLU":
+        if self.activation == "relu":
             self.derivative = ReLU_prime
             self.activation = ReLU
         elif self.activation == "tanh":

@@ -51,7 +51,7 @@ class NeuralNetworkModel:
         b_change[-1] = delta
         w_change[-1] = np.dot(delta, outputs[-2].T)
         for l in range(2, len(self.layers)):
-            prime = ReLU_prime(zs[-l])
+            prime = self.layers[-l].derivative(zs[-l])
             delta = np.dot(self.weights[-l+1].T, delta) * prime
             b_change[-l] = delta
             w_change[-l] = np.dot(delta, outputs[-l-1].T)
@@ -60,9 +60,9 @@ class NeuralNetworkModel:
     def update_batch(self, xt, yt):
         b_change = [np.zeros(b.shape) for b in self.biases]
         w_change = [np.zeros(w.shape) for w in self.weights]
-        for (x, y) in zip(xt, yt):
-            x = np.transpose([x])
-            y = np.transpose([y])
+        for (a, b) in zip(xt, yt):
+            x = np.transpose([a])
+            y = np.transpose([b])
             dw, db = self.backprop(x, y)
             b_change += db
             w_change += dw
@@ -73,7 +73,7 @@ class NeuralNetworkModel:
         acc = []
         for i in range(it):
             dw, db = self.update_batch(xt, yt)
-            self.weights = [w - alpha * ndw for (w, ndw) in zip(self.weights, dw)]
-            self.biases = [b - alpha * ndb for (b, ndb) in zip(self.biases, db)]
+            self.weights = [w - (alpha/len(xt)) * ndw for (w, ndw) in zip(self.weights, dw)]
+            self.biases = [b - (alpha/len(xt)) * ndb for (b, ndb) in zip(self.biases, db)]
             acc.append(L1(self.feedforward(np.transpose(xt[0])), np.transpose(yt[0])))
         return acc

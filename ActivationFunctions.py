@@ -36,7 +36,7 @@ def sigmoid(x):
     return 1 / (1 + np.e**(-x))
 
 def sigmoid_prime(x):
-    return sigmoid(x)/(1 - sigmoid(x))
+    return sigmoid(x) * (1 - sigmoid(x))
 
 
 """
@@ -61,6 +61,6 @@ def tanh_prime(x):
 """
 
 def softmax(layer):
-    exp = np.array([np.e**x for x in layer])
-    return np.array([(np.e**x)/sum(exp) for x in layer])
+    exp = np.exp(layer)
+    return exp/sum(exp)
 
