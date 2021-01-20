@@ -7,9 +7,9 @@ np.random.seed(0)
 
 """
     This is the Neural Network class itself.
-    For now, the network knows how to add new layers and feed forward the information.
-    Next, I'll add the backprop function which will help improving the accuracy by tweaking the weights.
-    After that, I'll add other things like training with more sets of inputs, a summary of the net, batches etc.
+    
+    It looks a lot like the one from Michel Nielsen's book and that's because his method is just the best
+    Tried a lot of methods but this was on another level
 """
 
 class NeuralNetworkModel:
@@ -47,7 +47,7 @@ class NeuralNetworkModel:
             layer = l.activation(z)
             zs.append(z)
             outputs.append(layer)
-        delta = np.array(layer - y)  # * ReLU(self.layers[-1].z)
+        delta = np.array(layer - y) * self.layers[-1].activation(zs[-1])
         b_change[-1] = delta
         w_change[-1] = np.dot(delta, outputs[-2].T)
         for l in range(2, len(self.layers)):
@@ -57,23 +57,24 @@ class NeuralNetworkModel:
             w_change[-l] = np.dot(delta, outputs[-l-1].T)
         return w_change, b_change
 
-    def update_batch(self, xt, yt):
+    def update_batch(self, xt, yt, alpha):
         b_change = [np.zeros(b.shape) for b in self.biases]
         w_change = [np.zeros(w.shape) for w in self.weights]
         for (a, b) in zip(xt, yt):
             x = np.transpose([a])
             y = np.transpose([b])
             dw, db = self.backprop(x, y)
-            b_change += db
-            w_change += dw
-        return w_change, b_change
+            b_change = [bc+dbc for bc, dbc in zip(b_change, db)]
+            w_change = [wc+dwc for wc, dwc in zip(w_change, dw)]
+        self.weights = [w - (alpha / len(xt)) * ndw for (w, ndw) in zip(self.weights, w_change)]
+        self.biases = [b - (alpha / len(xt)) * ndb for (b, ndb) in zip(self.biases, b_change)]
 
     # this is a simplified version of the train method, for now it works with just 1 input
-    def train(self, xt, yt, it, alpha):
+    def train(self, train_set, it, alpha):
         acc = []
+        xt = train_set[:-1]
+        yt = train_set[-1]
         for i in range(it):
-            dw, db = self.update_batch(xt, yt)
-            self.weights = [w - (alpha/len(xt)) * ndw for (w, ndw) in zip(self.weights, dw)]
-            self.biases = [b - (alpha/len(xt)) * ndb for (b, ndb) in zip(self.biases, db)]
+            self.update_batch(xt, yt, alpha)
             acc.append(L1(self.feedforward(np.transpose(xt[0])), np.transpose(yt[0])))
         return acc
