@@ -62,7 +62,7 @@ class NeuralNetworkModel:
         w_change = [np.zeros(w.shape) for w in self.weights]
         for (a, b) in zip(xt, yt):
             x = np.transpose([a])
-            y = np.transpose([b])
+            y = b
             dw, db = self.backprop(x, y)
             b_change = [bc+dbc for bc, dbc in zip(b_change, db)]
             w_change = [wc+dwc for wc, dwc in zip(w_change, dw)]
@@ -70,11 +70,12 @@ class NeuralNetworkModel:
         self.biases = [b - (alpha / len(xt)) * ndb for (b, ndb) in zip(self.biases, b_change)]
 
     # this is a simplified version of the train method, for now it works with just 1 input
-    def train(self, train_set, it, alpha):
-        acc = []
-        xt = train_set[:-1]
-        yt = train_set[-1]
+    def train(self, xt, yt, it, alpha, batch_size, x_test, y_test):
         for i in range(it):
-            self.update_batch(xt, yt, alpha)
-            acc.append(L1(self.feedforward(np.transpose(xt[0])), np.transpose(yt[0])))
-        return acc
+            for k in range(0, len(xt), batch_size):  # updating in batches -  needs to be changed
+                self.update_batch(xt[k:k+batch_size], yt[k:k+batch_size], alpha)
+            result = 0
+            for (x, y) in zip(x_test, y_test):
+                output = self.feedforward(x)
+                result += int(np.argmax(output) == y)
+            print("Epoch {0}: {1} / {2}".format(i + 1, result, len(y_test)))
