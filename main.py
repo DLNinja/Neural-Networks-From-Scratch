@@ -38,7 +38,6 @@ t.train(x_train, y, iterations, alpha, 32, x_test, y_test)
 
 """ The Results after running it in colab:
 
-
 With only 2 layers - it ran better
 t.add(Dense(64, "relu"))
 t.add(Dense(10, "sigmoid"))

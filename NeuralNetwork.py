@@ -28,7 +28,8 @@ class NeuralNetworkModel:
         self.biases.append(np.zeros((self.sizes[-1], 1)))
 
     def feedforward(self, input):  # The calculations are done for each of the layers
-        x = np.transpose([input])
+        if input.shape[-1] != 1:
+            x = np.transpose([input])
         for i in range(1, len(self.layers)):
             x = self.layers[i].activation(np.dot(self.weights[i-1], x) + self.biases[i-1])
         return x
