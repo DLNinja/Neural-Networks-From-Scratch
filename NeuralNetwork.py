@@ -1,4 +1,4 @@
-import numpy as np
+import random
 from Layer import Dense
 from LossFunctions import *
 from ActivationFunctions import *
@@ -11,6 +11,7 @@ np.random.seed(0)
     It looks a lot like the one from Michel Nielsen's book and that's because his method is just the best
     Tried a lot of methods but this was on another level
 """
+
 
 class NeuralNetworkModel:
     def __init__(self, inputSize, outputSize):
@@ -28,10 +29,9 @@ class NeuralNetworkModel:
         self.biases.append(np.zeros((self.sizes[-1], 1)))
 
     def feedforward(self, input):  # The calculations are done for each of the layers
-        if input.shape[-1] != 1:
-            x = np.transpose([input])
+        x = np.transpose([input])
         for i in range(1, len(self.layers)):
-            x = self.layers[i].activation(np.dot(self.weights[i-1], x) + self.biases[i-1])
+            x = self.layers[i].activation(np.dot(self.weights[i - 1], x) + self.biases[i - 1])
         return x
 
     def backprop(self, x, y):  # Ah, yess, the most important step ( which involves a lot of math)
@@ -53,30 +53,31 @@ class NeuralNetworkModel:
         w_change[-1] = np.dot(delta, outputs[-2].T)
         for l in range(2, len(self.layers)):
             prime = self.layers[-l].derivative(zs[-l])
-            delta = np.dot(self.weights[-l+1].T, delta) * prime
+            delta = np.dot(self.weights[-l + 1].T, delta) * prime
             b_change[-l] = delta
-            w_change[-l] = np.dot(delta, outputs[-l-1].T)
+            w_change[-l] = np.dot(delta, outputs[-l - 1].T)
         return w_change, b_change
 
-    def update_batch(self, xt, yt, alpha):
+    def update_batch(self, batch, alpha):
         b_change = [np.zeros(b.shape) for b in self.biases]
         w_change = [np.zeros(w.shape) for w in self.weights]
-        for (a, b) in zip(xt, yt):
+        for (a, y) in batch:
             x = np.transpose([a])
-            y = b
             dw, db = self.backprop(x, y)
-            b_change = [bc+dbc for bc, dbc in zip(b_change, db)]
-            w_change = [wc+dwc for wc, dwc in zip(w_change, dw)]
-        self.weights = [w - (alpha / len(xt)) * ndw for (w, ndw) in zip(self.weights, w_change)]
-        self.biases = [b - (alpha / len(xt)) * ndb for (b, ndb) in zip(self.biases, b_change)]
+            b_change = [bc + dbc for bc, dbc in zip(b_change, db)]
+            w_change = [wc + dwc for wc, dwc in zip(w_change, dw)]
+        self.weights = [w - (alpha / len(batch)) * ndw for (w, ndw) in zip(self.weights, w_change)]
+        self.biases = [b - (alpha / len(batch)) * ndb for (b, ndb) in zip(self.biases, b_change)]
 
     # this is a simplified version of the train method, for now it works with just 1 input
-    def train(self, xt, yt, it, alpha, batch_size, x_test, y_test):
-        for i in range(it):
-            for k in range(0, len(xt), batch_size):  # updating in batches -  needs to be changed
-                self.update_batch(xt[k:k+batch_size], yt[k:k+batch_size], alpha)
+    def train(self, train_set, epochs, alpha, batch_size, test_set):
+        for i in range(epochs):
+            random.shuffle(train_set)
+            batches = [train_set[k:k + batch_size] for k in range(0, len(train_set), batch_size)]
+            for batch in batches:
+                self.update_batch(batch, alpha)
             result = 0
-            for (x, y) in zip(x_test, y_test):
+            for x, y in test_set:
                 output = self.feedforward(x)
                 result += int(np.argmax(output) == y)
-            print("Epoch {0}: {1} / {2}".format(i + 1, result, len(y_test)))
+            print("Epoch {0}: {1} / {2}".format(i + 1, result, len(test_set)))
