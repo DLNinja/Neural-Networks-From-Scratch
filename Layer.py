@@ -31,7 +31,7 @@ class Dense:
             self.derivative = tanh_prime
         elif self.activation == "softmax":
             self.activation = softmax
-            self.derivative = L1
+            self.derivative = lambda x: 1
         else:
             self.activation = sigmoid
             self.derivative = sigmoid_prime
