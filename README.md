@@ -1,6 +1,6 @@
 # Neural Networks From Scratch
 
-(Work in progress)<br>
+(Work in progress, January project)<br>
 In this project I'll build a Neural Network from scrath (not in Scratch) <br>
 This project is inspired by the youtuber sentdex who has a book on this topic, but I wanted to try to do it myself to better understand Neural Networks in general.
 Everything will be in Python and maybe later I'll make a C++ version as well.
