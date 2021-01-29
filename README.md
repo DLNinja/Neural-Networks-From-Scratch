@@ -1,10 +1,21 @@
 # Neural Networks From Scratch
 
-(Work in progress, January project)<br>
 In this project I'll build a Neural Network from scrath <br>
 This project is inspired by the youtuber sentdex who has a book on this topic, but I wanted to try to do it myself to better understand Neural Networks in general.
 Everything will be in Python and maybe later I'll make a C++ version as well. <br>
 Like the name suggests I'll write it from scratch, using simple python and only using numpy for things like transpose, random, dot product etc.
+
+---
+
+What is a Neural Network ?
+
+A Neural Network is a learning system which resembles the human brain. The basic computational unit in the brain is the neuron, in a NN it is also called neuron or perceptron.
+the biological neuron gets input signals through its dendrites and outputs a signal through its axon which connects to the dendrites of other neurons. The neuron from a NN behaves almost the same, it gets signals from neurons, sums those signals and sends an output signal to other neurons. Before sending the output signal, it applies an activation function (I'll explain it later).
+<!--
+<img height="150px" width="200px" align="left" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tutorialspoint.com%2Ftensorflow%2Ftensorflow_single_layer_perceptron.htm&psig=AOvVaw1GtMt1_dJD8vQeFeLOtkF0&ust=1612000169981000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCODkjO7uwO4CFQAAAAAdAAAAABAy" />
+<br>
+Neurons are arranged in layers: input layer, hidden layers and output layer.
+The input layer takes the input of the model and feeds it to the next layer through connections named weights, and so on, until it reaches the output layer, where it will generate predictions -->
 
 ---
 
