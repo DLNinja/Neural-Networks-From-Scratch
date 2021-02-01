@@ -27,12 +27,28 @@ Every layer will have their own set of biases, and a set of weights between them
 This set of weights is different for every pair of layers, it has random values in the start, but this values will be changed after each backpropagation process.
     
 <h4>Layer.py</h4>
-```
-No language indicated, so no syntax highlighting. 
-But let's throw in a <b>tag</b>.
-```
-    
 
+ ```python
+ class Dense:
+    def __init__(self, layerSize, activation="sigmoid", weightBounds=(-1, 1)):
+        self.length = layerSize
+        self.bounds = weightBounds
+        self.activation = activation
+        self.derivative = activation
+
+        if self.activation == "relu":
+            self.derivative = ReLU_prime
+            self.activation = ReLU
+        elif self.activation == "tanh":
+            self.activation = tanh
+            self.derivative = tanh_prime
+        elif self.activation == "softmax":
+            self.activation = softmax
+            self.derivative = lambda x: 1
+        else:
+            self.activation = sigmoid
+            self.derivative = sigmoid_prime
+```
 ---
 
 <h2>Some resources that helped me in understanding more about NN:</h2>
