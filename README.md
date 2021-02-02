@@ -56,3 +56,5 @@ This set of weights is different for every pair of layers, it has random values 
 <br> sentdex's book: https://nnfs.io/
 <br> A series of videos about NNs by 3Blue1Brown: <br> https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
 <br> Michael Nielsen's book on the topic: http://neuralnetworksanddeeplearning.com/chap1.html
+
+<br> bruh
