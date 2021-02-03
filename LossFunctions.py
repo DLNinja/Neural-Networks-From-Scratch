@@ -1,6 +1,6 @@
 """
 
-    This is the file that contains all the loss functions(to be added)
+    This is the file that contains all the loss functions (more to be added)
 
 """
 
