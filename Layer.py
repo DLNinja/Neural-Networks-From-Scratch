@@ -3,13 +3,6 @@ from ActivationFunctions import *
 from LossFunctions import *
 
 """
-    With this class we create the layers that will go in the neural network
-    Every layer will have their own set of biases, and a set of weights between them and the prior layer
-    This set of weights is different for every pair of layers, it has random values in the start, but this values
-    will be changed after each backpropagation process.
-"""
-
-"""
     Our Dense class creates the layer, taking as parameters the folowing:
         - layerSize: the size of the actual layer
         - activation: this specifies the activation function we'll use for this layer
