@@ -69,7 +69,6 @@ class NeuralNetworkModel:
         self.weights = [w - (alpha / len(batch)) * ndw for (w, ndw) in zip(self.weights, w_change)]
         self.biases = [b - (alpha / len(batch)) * ndb for (b, ndb) in zip(self.biases, b_change)]
 
-    # this is a simplified version of the train method, for now it works with just 1 input
     def train(self, train_set, epochs, alpha, batch_size, test_set):
         for i in range(epochs):
             random.shuffle(train_set)
