@@ -23,8 +23,12 @@ The input layer takes the input of the model and feeds it to the next layer thro
   
 <h3> The layers </h3>
 
-Every layer will have their own set of biases, and a set of weights between them and the prior layer
+The NN is built with layers (minimum 2), and each layer is made up from a number of neurons (the number is given by the user).
+Every layer has their own set of biases, and a set of weights between them and the prior layer
 This set of weights is different for every pair of layers, it has random values in the start, but this values will be changed after each backpropagation process.
+
+In the code below, I made the class Dense (the same name like the one from keras) which represents the layer.
+It takes ```layerSize``` (how big the layer will be), ```weightBounds``` (the interval for the weight values) and ```activation``` (what function will be applied on this layer before going to the next layer in the NN).
     
 <h4>Layer.py</h4>
 
@@ -56,5 +60,3 @@ This set of weights is different for every pair of layers, it has random values 
 <br> sentdex's book: https://nnfs.io/
 <br> A series of videos about NNs by 3Blue1Brown: <br> https://www.youtube.com/playlist?list=PLZHQObOWTQDNU6R1_67000Dx_ZCJB-3pi
 <br> Michael Nielsen's book on the topic: http://neuralnetworksanddeeplearning.com/chap1.html
-
-<br> bruh
