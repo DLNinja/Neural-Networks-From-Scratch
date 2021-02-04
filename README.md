@@ -9,13 +9,12 @@ Like the name suggests I'll write it from scratch, using simple python and only 
 
 <h2> What is a Neural Network ? </h2>
 
-A Neural Network is a learning system which resembles the human brain. The basic computational unit in the brain is the neuron, in a NN it is also called neuron or perceptron.
-the biological neuron gets input signals through its dendrites and outputs a signal through its axon which connects to the dendrites of other neurons. The neuron from a NN behaves almost the same, it gets signals from neurons, sums those signals and sends an output signal to other neurons. Before sending the output signal, it applies an activation function (I'll explain it later).
+A Neural Network is a learning system which resembles the human brain. The basic computational unit in the brain is the neuron. In a NN it is called neuron or perceptron.
+The biological neuron gets input signals from a number of neurons and based on those signals it outputs a signal to other neurons. The perceptron behaves almost the same, it gets signals from neurons int the prior layer, sums those signals, applies an activation function on the sum and sends an output signal to the neurons in the next layer. 
 <!--
-<img height="150px" width="200px" align="left" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tutorialspoint.com%2Ftensorflow%2Ftensorflow_single_layer_perceptron.htm&psig=AOvVaw1GtMt1_dJD8vQeFeLOtkF0&ust=1612000169981000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCODkjO7uwO4CFQAAAAAdAAAAABAy" />
+<img height="150px" width="200px" align="center" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tutorialspoint.com%2Ftensorflow%2Ftensorflow_single_layer_perceptron.htm&psig=AOvVaw1GtMt1_dJD8vQeFeLOtkF0&ust=1612000169981000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCODkjO7uwO4CFQAAAAAdAAAAABAy" />
 <br>
-Neurons are arranged in layers: input layer, hidden layers and output layer.
-The input layer takes the input of the model and feeds it to the next layer through connections named weights, and so on, until it reaches the output layer, where it will generate predictions -->
+-->
 
 ---
 
@@ -23,9 +22,16 @@ The input layer takes the input of the model and feeds it to the next layer thro
   
 <h3> The layers </h3>
 
-The NN is built with layers (minimum 2), and each layer is made up from a number of neurons (the number is given by the user).
-Every layer has their own set of biases, and a set of weights between them and the prior layer
-This set of weights is different for every pair of layers, it has random values in the start, but this values will be changed after each backpropagation process.
+A Neural Network is built with layers (minimum 2), and each layer contains a given number of neurons. <br>
+The first layer is the Input Layer, the last one is named Output Layer and the layers between the two are named Hidden Layers. <br>
+Neurons from one layer are connected with neurons from the prior and the next layer, each connection has a weight which influences the values carried from one neuron to another.
+Also, each neuron has a bias, which can adjust the value before applying an activation function.
+
+<!--
+[![Neural Net](https://developers.google.com/machine-learning/crash-course/images/1hidden.svg)](height="300px" width="500px")
+<img height="150px" width="200px" align="left" src="https://developers.google.com/machine-learning/crash-course/images/1hidden.svg" />
+<br>
+-->
 
 In the code below, I made the class Dense (the same name like the one from keras) which represents the layer.
 It takes ```layerSize``` (how big the layer will be), ```weightBounds``` (the interval for the weight values) and ```activation``` (what function will be applied on this layer before going to the next layer in the NN).
