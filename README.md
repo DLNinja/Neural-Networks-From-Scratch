@@ -84,7 +84,7 @@ In more scientific terms, an activation function is a "mathematical formalism th
           
   ```python
      def relu(x):
-         return max(x, 0)
+         return np.maximum(x, 0)
   ```
          
   <br>
