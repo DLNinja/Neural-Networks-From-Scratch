@@ -64,11 +64,33 @@ It takes ```layerSize``` (how big the layer will be), ```weightBounds``` (the in
 
 In more scientific terms, an activation function is a "mathematical formalism that is used to approximate the influence of an extracellular field on an axon or neurons", but basically we aplly a function on a neuron to help it decide what should be fired to next neurons. Maybe the examples will make it easier to understand: <br>
 
-  <h4>Sigmoid Function:</h4> <br>
-      <p>The sigmoid function converts the sum to a value between 0 and 1.</p>
-      <br>
-      <img height="400px" width="700px" align="center" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/320px-Logistic-curve.svg.png" />
-            
+  <h3>Sigmoid Function:</h3>
+  <p>The sigmoid function converts the sum to a value between 0 and 1.<br>
+  The formula is: <br>
+          
+  ```python
+     def sigmoid(x):
+         return 1 / (1 + np.e**(-x))
+  ```
+         
+  <br>
+  This is how it looks:</p>
+  <br>
+  <img height="400px" width="700px" align="center" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Logistic-curve.svg/320px-Logistic-curve.svg.png" />
+  
+  <h3>ReLU Function:</h3>
+  <p>The Rectified Linear Unit, or ReLU, is a function that is easier to compute than a function like sigmoid while working a little better (in some cases). It basically outputs the maximum between a value and 0.<br>
+  The formula is: <br>
+          
+  ```python
+     def relu(x):
+         return max(x, 0)
+  ```
+         
+  <br>
+  This is how it looks:</p>
+  <br>
+  <img height="400px" width="700px" align="center" src="https://classic.d2l.ai/_images/output_mlp_699d0d_3_0.svg" />
 
 ---
 
