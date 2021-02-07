@@ -92,7 +92,7 @@ In more scientific terms, an activation function is a "mathematical formalism th
   <br>
   <img height="400px" width="700px" align="center" src="https://classic.d2l.ai/_images/output_mlp_699d0d_3_0.svg" />
   
-  <h3>ReLU Function:</h3>
+  <h3>Tanh Function:</h3>
   <p>The tanh function outputs values between -1 and 1.<br>
   The formula is: <br>
           
