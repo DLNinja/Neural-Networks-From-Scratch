@@ -9,7 +9,7 @@ Like the name suggests I'll write it from scratch, using simple python and only 
 
 <h2> What is a Neural Network ? </h2>
 
-A Neural Network is a learning system which resembles the human brain. The basic computational unit in the brain is the neuron. In a NN it is called neuron or perceptron.
+A Neural Network is a learning system which resembles the human brain. The basic computational unit in the brain is the neuron. In a NN it is called neuron or perceptron or nodes.
 The biological neuron gets input signals from a number of neurons and based on those signals it outputs a signal to other neurons. The perceptron behaves almost the same, it gets signals from neurons int the prior layer, sums those signals, applies an activation function on the sum and sends an output signal to the neurons in the next layer. 
 <!--
 <img height="150px" width="200px" align="center" src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.tutorialspoint.com%2Ftensorflow%2Ftensorflow_single_layer_perceptron.htm&psig=AOvVaw1GtMt1_dJD8vQeFeLOtkF0&ust=1612000169981000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCODkjO7uwO4CFQAAAAAdAAAAABAy" />
@@ -105,7 +105,25 @@ In more scientific terms, an activation function is a "mathematical formalism th
   This is how it looks:</p>
   <br>
   <img height="400px" width="700px" align="center" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Hyperbolic_Tangent.svg/1280px-Hyperbolic_Tangent.svg.png" />
+ <h2> How does the it work?</h2>
+      <h3>Feed forward:</h3>
+     
+We calculate the value for a neuron by summing the values of each of the nodes from the previous layer multiplied by their respective weight than adding the bias. After that we apply the activation function and our neuron is ready to send its value to the next layer.<br>
+The formula is:
   
+y = σ (w * x + b) , where:
+                
+- y is the current node
+- σ is the activation function
+- x is a vector containing the values of the previous layer
+- w is a vector containing the weights (wi is the weight between xi and y)
+- b is the bias. 
+      
+Here w is a vector because we have only one node, but when we'll work with an entire layer, w is a matrix.
+      <!--
+      As I mentioned earlier, neurons are connected with conections that have weights with the neurons from the previous layer, also, each of them has a bias. 
+      -->
+      
 ---
 
 <h2>Some resources that helped me in understanding more about NN:</h2>
