@@ -7,7 +7,7 @@ Like the name suggests I'll write it from scratch, using simple python and only 
 
 ---
 
-<h2> What is a Neural Network ? </h2>
+<h1> What is a Neural Network ? </h1>
 
 A Neural Network is a learning system which resembles the human brain. The basic computational unit in the brain is the neuron. In a NN it is called neuron or perceptron or nodes.
 The biological neuron gets input signals from a number of neurons and based on those signals it outputs a signal to other neurons. The perceptron behaves almost the same, it gets signals from neurons int the prior layer, sums those signals, applies an activation function on the sum and sends an output signal to the neurons in the next layer. 
@@ -18,9 +18,9 @@ The biological neuron gets input signals from a number of neurons and based on t
 
 ---
 
-<h2> Structure </h2>
+<h1> Structure </h1>
   
-<h3> The layers </h3>
+<h2> The layers </h2>
 
 A Neural Network is built with layers (minimum 2), and each layer contains a given number of neurons. <br>
 The first layer is the Input Layer, the last one is named Output Layer and the layers between the two are named Hidden Layers. <br>
@@ -60,7 +60,7 @@ It takes ```layerSize``` (how big the layer will be), ```weightBounds``` (the in
             self.derivative = sigmoid_prime
 ```
 
-<h3> Activation functions </h3>
+<h2> Activation functions </h2>
 
 In more scientific terms, an activation function is a "mathematical formalism that is used to approximate the influence of an extracellular field on an axon or neurons", but basically we aplly a function on a neuron to help it decide what should be fired to next neurons. Maybe the examples will make it easier to understand: <br>
 
@@ -106,13 +106,27 @@ In more scientific terms, an activation function is a "mathematical formalism th
   <br>
   <img height="400px" width="700px" align="center" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Hyperbolic_Tangent.svg/1280px-Hyperbolic_Tangent.svg.png" />
 
-<h3> Hyperparameters </h3>
+<h2> Hyperparameters </h2>
 
-<h2>
+Hyperparameters are variables that determine how the network is trained. The ones that I'll focus on are the learning rate, batch size and epochs.
+
+<h3>Learning rate</h3>
+
+It defines how fast a network is updating its parameters. A too low learning rate slows the learning process but may take a lot more to converge, and a large learning rate speeds up the learning process but it may not converge.
+
+<h3>Epochs</h3>
+
+An epoch determines how many times the network will go over the training data.
+
+<h3>Batch size</h3>
+
+The batch size is the number of samples given to the network before updating the parameteres.
+
+Most commonly used values are 32, 64, 128, 256, but it varies from model to model.
 
 
-<h2> How does it work?</h2>
-      <h3>Feed forward:</h3>
+<h1> How does it work?</h1>
+      <h2>Feed forward:</h2>
      
 We calculate the value for a neuron by summing the values of each of the nodes from the previous layer multiplied by their respective weight than adding the bias. After that we apply the activation function and our neuron is ready to send its value to the next layer.<br>
 The formula is:
