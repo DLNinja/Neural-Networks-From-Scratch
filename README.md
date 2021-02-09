@@ -105,7 +105,13 @@ In more scientific terms, an activation function is a "mathematical formalism th
   This is how it looks:</p>
   <br>
   <img height="400px" width="700px" align="center" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Hyperbolic_Tangent.svg/1280px-Hyperbolic_Tangent.svg.png" />
- <h2> How does the it work?</h2>
+
+<h3> Hyperparameters </h3>
+
+<h2>
+
+
+<h2> How does it work?</h2>
       <h3>Feed forward:</h3>
      
 We calculate the value for a neuron by summing the values of each of the nodes from the previous layer multiplied by their respective weight than adding the bias. After that we apply the activation function and our neuron is ready to send its value to the next layer.<br>
@@ -123,7 +129,13 @@ Here w is a vector because we have only one node, but when we'll work with an en
       <!--
       As I mentioned earlier, neurons are connected with conections that have weights with the neurons from the previous layer, also, each of them has a bias. 
       -->
-      
+<h3>Backpropagation:</h3>
+
+
+After we used feed-forward on all our layers, the output layer will have values which are usually not the same as the expected output. Here comes the "learning" part, where we use the values from all the layers to update all of our weights and biases. We calculate the cost, which is the difference between the predicted and the expected output, than we go from that last layer to the first one, like in the feed-forward faze, but now backwards.
+
+Here comes a little bit of math. Because we used activation functions on our layers, now going back, we use the derivatives of those functions, applied to the values of the layer with respect to the weights/bises, than we update the weights/biases by substracting the result from the derivative, multiplied by the learning rate, α, often divided by the batch size. To help the model train better and not overfit, we do this process at the end of every batch.
+
 ---
 
 <h2>Some resources that helped me in understanding more about NN:</h2>
