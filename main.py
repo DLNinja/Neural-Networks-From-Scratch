@@ -6,9 +6,7 @@ from NeuralNetwork import *
 import numpy as np
 import matplotlib.pyplot as plt
 from Layer import *
-from keras.datasets import mnist  # for later
-
-# Should be working, but it doesn't
+from keras.datasets import mnist
 
 (x_train, y_train), (x_test, y_test) = mnist.load_data()
 
