@@ -33,9 +33,21 @@ t = NeuralNetworkModel(784, 10)
 t.add(Dense(64, "sigmoid"))
 t.add(Dense(10, "sigmoid"))
 
-t.train(train, epochs, alpha, batch_size, test)
+# t.train(train, epochs, alpha, batch_size, test) # training the NN
 
-""" The Results after running it:
+# t.save("modeltest.txt")
+
+""" Testing the save/load functions"""
+
+n = NeuralNetworkModel(784, 10)
+n.load("modeltest.txt")
+result = 0
+for x, y in test:
+    output = n.feedforward(x)
+    result += int(np.argmax(output) == y)
+print("Accuracy: {0}".format(result / len(test) * 100))
+
+""" The Results after running the NN:
 
 On my laptop, with the above structure:
 

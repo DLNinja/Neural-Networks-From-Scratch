@@ -95,29 +95,64 @@ class NeuralNetworkModel:
         f.write("Layers: {}\n".format(len(self.sizes) - 1))
         for i in range(1, len(self.sizes)):
             layer = self.layers[i]
-            f.write("Layer nr. {}: Size: {} Function: {}".format(i, self.sizes[i], layer.function))
+            f.write("Layer nr. {}:\n".format(i))
+            f.write("Size: {} Function: {}".format(self.sizes[i], layer.function))
             if layer.bounds != (-1, 1):
-                f.write(" Weight Bounds: {}".format(layer.bounds))
+                f.write(" WeightBounds: {},{}".format(layer.bounds[0], layer.bounds[1]))
             f.write("\n")
             f.write("Weights:\n")
             for x in self.weights[i-1]:
                 for y in x:
                     f.write("{} ".format(y))
                 f.write("\n")
-            f.write("\n")
             f.write("Biases:\n")
             for x in self.biases[i-1]:
                 for y in x:
                     f.write("{} ".format(y))
                 f.write("\n")
             f.write("\n")
+        f.write("end")
         f.close()
 
+    def load(self, name):
+        f = open(name, "r").readlines()
+        k = 0
+        index = 0
+        while f[k] != "end":
+            line = f[k]
+            if line == "\n":
+                k += 1
+                index += 1
+                continue
+            elif not line.find("Layer nr."):
+                k += 1
+                l = f[k][:-1].split(" ")
+                size = int(l[l.index("Size:") + 1])
+                func = l[l.index("Function:") + 1]
+                if f[k].find("WeightBounds:") > 0:
+                    bounds = l[l.index("WeightBounds:") + 1]
+                    b1 = int(bounds.split(",")[0])
+                    b2 = int(bounds.split(",")[1])
+                    self.add(Dense(size, func, (b1, b2)))
+                else:
+                    self.add(Dense(size, func))
+            elif line == "Weights:\n":
+                k += 1
+                i = 0
+                while f[k] != "Biases:\n":
+                    l = f[k].split(" ")[:-1]
+                    for j in range(len(l)):
+                        self.weights[index][i][j] = float(l[j])
+                    i += 1
+                    k += 1
+                k += 1
+                i = 0
+                while f[k] != "\n":
+                    l = f[k].split(" ")[:-1]
+                    for j in range(len(l)):
+                        self.biases[index][i][j] = float(l[j])
+                    i += 1
+                    k += 1
+                k -= 1
+            k += 1
 
-"""
-    For testing purposes
-"""
-a = NeuralNetworkModel(10, 1)
-a.add(Dense(5, "sigmoid", weightBounds=(0, 1)))
-a.add(Dense(1, "sigmoid"))
-a.save("model.txt")
