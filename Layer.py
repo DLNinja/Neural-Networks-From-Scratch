@@ -13,6 +13,7 @@ class Dense:
     def __init__(self, layerSize, activation="sigmoid", weightBounds=(-1, 1)):
         self.length = layerSize
         self.bounds = weightBounds
+        self.function = activation
         self.activation = activation
         self.derivative = activation
 
