@@ -28,7 +28,7 @@ for j in y_train:
 train = list(zip(x_train, y))
 test = list(zip(x_test, y_test))
 
-epochs = 30
+epochs = 20
 alpha = 0.1
 batch_size = 32
 t = NeuralNetworkModel(784, 10)
@@ -61,16 +61,6 @@ Epoch 17: 5350 / 10000
 Epoch 18: 5358 / 10000
 Epoch 19: 5366 / 10000
 Epoch 20: 5373 / 10000
-Epoch 21: 5381 / 10000
-Epoch 22: 5395 / 10000
-Epoch 23: 5404 / 10000
-Epoch 24: 5409 / 10000
-Epoch 25: 5422 / 10000
-Epoch 26: 5424 / 10000
-Epoch 27: 5427 / 10000
-Epoch 28: 5444 / 10000
-Epoch 29: 5436 / 10000
-Epoch 30: 5454 / 10000
 
 Process finished with exit code 0
 
