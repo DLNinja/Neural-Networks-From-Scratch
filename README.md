@@ -143,12 +143,16 @@ Here w is a vector because we have only one node, but when we'll work with an en
       <!--
       As I mentioned earlier, neurons are connected with conections that have weights with the neurons from the previous layer, also, each of them has a bias. 
       -->
-<h3>Backpropagation:</h3>
+<h2>Backpropagation:</h2>
 
 
 After we used feed-forward on all our layers, the output layer will have values which are usually not the same as the expected output. Here comes the "learning" part, where we use the values from all the layers to update all of our weights and biases. We calculate the cost, which is the difference between the predicted and the expected output, than we go from that last layer to the first one, like in the feed-forward faze, but now backwards.
 
 Here comes a little bit of math. Because we used activation functions on our layers, now going back, we use the derivatives of those functions, applied to the values of the layer with respect to the weights/bises, than we update the weights/biases by substracting the result from the derivative, multiplied by the learning rate, α, often divided by the batch size. To help the model train better and not overfit, we do this process at the end of every batch.
+
+The backpropagation process can be a little difficult to understand, but I hope it'll be clearer in the code section.
+
+<h2> Training </h2>
 
 ---
 
