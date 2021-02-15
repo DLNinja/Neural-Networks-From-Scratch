@@ -27,7 +27,7 @@ class NeuralNetworkModel:
         self.layers.append(newLayer)
         self.sizes.append(newLayer.length)
         self.weights.append(np.random.randn(self.sizes[-1], self.sizes[-2]))
-        self.biases.append(np.zeros((self.sizes[-1], 1)))
+        self.biases.append(np.ones((self.sizes[-1], 1)))
 
     def feedforward(self, input):  # The calculations are done for each of the layers
         x = np.transpose([input])
