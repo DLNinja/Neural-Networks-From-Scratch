@@ -159,7 +159,9 @@ This is the part where all the things explained earlier are used together to hel
 This process requires a dataset, which will be split in train/test sets and sometimes its better to also have a validation set. The train set contains the samples we'll give to the NN to "train" it, than we use the validation set to see how well it behaves and after it went through all the samples from train set, we give it the test set to see how well it does. This is an epoch and we do this process how many times we want by setting the ```epochs``` hyperparameter. But, by doing this we will get the same result after every 
 epoch. That's where we use backpropagation, to update the weights and the biases, so the NN will give different results, maybe better, maybe worse. Because it takes a lot of computation, we'll apply backpropagation after a number of samples (not after every sample), and this number is represented by the ```batch size```. A batch is like a mini dataset, with samples from the train set. We do the usual thing, go through each sample, apply feedforward, we get the result, and after we completed the batch, we apply backpropagation. This helps because, for example, if we have 3200 samples, instead of doing backprop for 3200 times, with a batch size of 32 (which is the most used value), we only apply the process 100 times, which is a lot faster and gives better results.
 
+<h1> Putting it all together</h1>
 
+In this section I'll show how all the information above is implemented in code, using python. Some things are different from the usual approach because I tried not to rely too much on other projects.
 
 
 ---
