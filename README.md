@@ -179,8 +179,60 @@ epoch. That's where we use backpropagation, to update the weights and the biases
 
 In this section I'll show how all the information above is implemented in code, using python. Some things are different from the usual approach because I tried not to rely too much on others implementation.
 
+So, the first thing would be the layers, and as I mentioned earlier, I created a class for it, named ```Dense``` and for each layer we'll remember the size, the activation function and the bounds for the weights.
+
+After that we have the code for the functions, I showed those before but here's all of them
+
+```python
+def ReLU(x):
+    return np.maximum(0, x)
+
+def ReLU_prime(x):
+    return (x > 0)
+
+def sigmoid(x):
+    return 1.0 / (1.0 + np.exp(-x))
+
+def sigmoid_prime(x):
+    return sigmoid(x) * (1 - sigmoid(x))
+
+def tanh(x):
+    return (np.e**x - np.e**(-x))/(np.e**x + np.e**(-x))
+
+def tanh_prime(x):
+    return 1-tanh(x)**2
+
+def softmax(layer):
+    exp = np.exp(layer)
+    return exp/sum(exp)
+```
+
+And now we have the hard part, the neural network class itself, named ```NeuralNetworkModel```
+
+First things first, the initialization of the model. We take as parameters the size of the input layer and the output layer. The input size is added to a sizes list where it will store the size of each layer, than we have a layers list where we'll store the layers as we add them, and than the weights and biases lists where we'll store all the weights and biases from each layer, in order. I could've kept them within the Dense class but this way they are more accessible.
+
+```python
+def __init__(self, inputSize, outputSize):
+    self.x = inputSize
+    self.y = outputSize
+    self.sizes = [inputSize]
+    self.layers = [np.zeros((1, inputSize))]  # this stores the layers
+    self.weights = []
+    self.biases = []
+
+```
+
+Now we need layers. We have the ```add``` function which takes a layer as input, adds it to the layers list, adds its size to the sizes list, and with its size creates random weights and biases which will be stored in their respective lists.
 
 
+```python
+def add(self, newLayer):  # like the name suggests, it adds layers to the net
+    self.layers.append(newLayer)
+    self.sizes.append(newLayer.length)
+    self.weights.append(np.random.randn(self.sizes[-1], self.sizes[-2]))
+    self.biases.append(np.ones((self.sizes[-1], 1)))
+
+```
 
 
 ---
