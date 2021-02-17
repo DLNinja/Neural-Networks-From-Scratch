@@ -66,7 +66,7 @@ In more scientific terms, an activation function is a "mathematical formalism th
 
   <h3>Sigmoid Function:</h3>
   <p>The sigmoid function converts the sum to a value between 0 and 1.<br>
-  The formula is: <br>
+  The implementation is: <br>
           
   ```python
      def sigmoid(x):
@@ -80,7 +80,7 @@ In more scientific terms, an activation function is a "mathematical formalism th
   
   <h3>ReLU Function:</h3>
   <p>The Rectified Linear Unit, or ReLU, is a function that is easier to compute than a function like sigmoid while working a little better (in some cases). It basically outputs the maximum between a value and 0.<br>
-  The formula is: <br>
+  The implementation is: <br>
           
   ```python
      def relu(x):
@@ -94,7 +94,7 @@ In more scientific terms, an activation function is a "mathematical formalism th
   
   <h3>Tanh Function:</h3>
   <p>The tanh function outputs values between -1 and 1.<br>
-  The formula is: <br>
+  The implementation is: <br>
           
   ```python
      def tanh(x):
@@ -105,7 +105,23 @@ In more scientific terms, an activation function is a "mathematical formalism th
   This is how it looks:</p>
   <br>
   <img height="400px" width="700px" align="center" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Hyperbolic_Tangent.svg/1280px-Hyperbolic_Tangent.svg.png" />
-
+  
+  <h3>Softmax Function:</h3>
+  <p>It outputs values between 0 and 1. The softmax function is usually used on the output layer.<br>
+  The implementation is: <br>
+          
+  ```python
+     def softmax(layer):
+         exp = np.exp(layer)
+         return exp/sum(exp)
+  ```
+         
+  <br>
+  This is how the equation looks like:</p>
+  <br>
+  <img height="150px" width="80%" align="center" src="https://miro.medium.com/max/1706/0*JJyPQsmvH5nq48xx.png" />
+ 
+ 
 <h2> Hyperparameters </h2>
 
 Hyperparameters are variables that determine how the network is trained. The ones that I'll focus on are the learning rate, batch size and epochs.
@@ -161,7 +177,10 @@ epoch. That's where we use backpropagation, to update the weights and the biases
 
 <h1> Putting it all together</h1>
 
-In this section I'll show how all the information above is implemented in code, using python. Some things are different from the usual approach because I tried not to rely too much on other projects.
+In this section I'll show how all the information above is implemented in code, using python. Some things are different from the usual approach because I tried not to rely too much on others implementation.
+
+
+
 
 
 ---
