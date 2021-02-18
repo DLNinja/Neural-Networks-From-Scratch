@@ -255,7 +255,13 @@ Output layer (special case):
 - the results will be kept in the ```delta``` variable (list), this values will represent the change in the output layer's biases and the for the change in weights we take the dot product between delta and the output from the previous layer
 
 The rest of the layers:
-- asd
+- for the rest, we apply something similar
+- let's say we are on layer k
+- now delta will be the dot product between layer (k+1)'s weights and the current value of delta times the derivative of the output of this layer
+- this delta is given to the change in the biases of the layer k
+- the change in the layer k's weights will be the dot product of delta and the output of layer (k-1)
+
+In the code below you'll see .T added to some list, this is because of the dot product, which is matrix multiplication, so some dimensions must be the same
 
 
 ```python
