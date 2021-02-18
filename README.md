@@ -179,7 +179,7 @@ epoch. That's where we use backpropagation, to update the weights and the biases
 
 In this section I'll show how all the information above is implemented in code, using python. Some things are different from the usual approach because I tried not to rely too much on others implementation.
 
-So, the first thing would be the layers, and as I mentioned earlier, I created a class for it, named ```Dense``` and for each layer we'll remember the size, the activation function and the bounds for the weights.
+So, the first thing would be the layers, and as I mentioned earlier, I created a class for them, named ```Dense``` and for each layer we'll remember the size, the activation function and the bounds for the weights.
 
 After that we have the code for the functions, I showed those before but here's all of them
 
@@ -209,7 +209,7 @@ def softmax(layer):
 
 And now we have the hard part, the neural network class itself, named ```NeuralNetworkModel```
 
-First things first, the initialization of the model. We take as parameters the size of the input layer and the output layer. The input size is added to a sizes list where it will store the size of each layer, than we have a layers list where we'll store the layers as we add them, and than the weights and biases lists where we'll store all the weights and biases from each layer, in order. I could've kept them within the Dense class but this way they are more accessible.
+First things first, the initialization of the model. We take as parameters the size of the input layer and the output layer. The input size is added to a sizes list where it will store the size of each layer, than we have a layers list where we'll store the layers as we add them, and than the weights and biases lists where we'll store all the weights and biases from each layer, in order. I could've kept them within the Dense class but this way they are more accessible. I also added a layer full of zeros, that's just so I know that layer 0 is the input layer, and this layer will be replaced with an actual layer in the feedforward process.
 
 ```python
 def __init__(self, inputSize, outputSize):
@@ -234,6 +234,52 @@ def add(self, newLayer):  # like the name suggests, it adds layers to the net
 
 ```
 
+After that, we start implementing the fun stuff, starting with the ```feedforward``` method. As you can see, it takes the input layer which is given to the x variable. Now it goes through the layers list and we apply the ecuation ```x = σ (w * x + b)``` on each layer, and at the end, x will remain a layer with the values for the output layer.
+
+```python
+def feedforward(self, input):  # The calculations are done for each of the layers
+    x = np.transpose([input])
+    for i in range(1, len(self.layers)):
+        x = self.layers[i].activation(np.dot(self.weights[i-1], x) + self.biases[i-1])
+    return x
+```
+
+And now, the ```backpropagation``` function, which is the most important process that with which our NN learns.
+
+First, we initialise the list that will represent the changes in weights/biases which will be returned at the end, a list ```outputs``` which keeps the output of each layer, the ```layer``` variable keeps the values of the current layer and the ```zs``` list keeps the values of each layer before applying the activation function.
+
+Now we apply feedforward to every layer, from input to output layers, storing values in the lists initialised before. After that, we go through the NN again, but now from the last layer to the first, applying this operations:
+
+Output layer (special case):
+- we start with the output layer and take the cost function, which is the values of the output layer after feeding forward minus the actual values our output layer should have
+- the results will be kept in the ```delta``` variable (list), this values will represent the change in the output layer's biases and the for the change in weights we take the dot product between delta and the output from the previous layer
+
+The rest of the layers:
+- asd
+
+
+```python
+def backprop(self, x, y):
+    b_change = [np.zeros(b.shape) for b in self.biases]
+    w_change = [np.zeros(w.shape) for w in self.weights]
+    outputs = [x]
+    layer = x
+    zs = []
+    for (l, w, b) in zip(self.layers[1:], self.weights, self.biases):
+        z = np.dot(w, layer) + b
+        layer = l.activation(z)
+        zs.append(z)
+        outputs.append(layer)
+    delta = np.array(layer - y) * self.layers[-1].activation(zs[-1])
+    b_change[-1] = delta
+    w_change[-1] = np.dot(delta, outputs[-2].T)
+    for l in range(2, len(self.layers)):
+        prime = self.layers[-l].derivative(zs[-l])
+        delta = np.dot(self.weights[-l+1].T, delta) * prime
+        b_change[-l] = delta
+        w_change[-l] = np.dot(delta, outputs[-l-1].T)
+    return w_change, b_change
+```
 
 ---
 
