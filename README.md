@@ -287,6 +287,42 @@ def backprop(self, x, y):
     return w_change, b_change
 ```
 
+Now we'll use the backprop to train the model, and we'll train it in batches so it doesn't overfit, nor is it biased. For that I created the ```update_batch``` method which will take a batch of samples from the train set, apply FF and BP on each sample, sum the changes in weights and biases, and only after the batch is complete, add this changes to the actual weights/biases.
+
+```python
+def update_batch(self, batch, alpha):
+    b_change = [np.zeros(b.shape) for b in self.biases]
+    w_change = [np.zeros(w.shape) for w in self.weights]
+    for (a, y) in batch:
+        x = np.transpose([a])
+        dw, db = self.backprop(x, y)
+        b_change = [bc+dbc for bc, dbc in zip(b_change, db)]
+        w_change = [wc+dwc for wc, dwc in zip(w_change, dw)]
+    self.weights = [w - (alpha / len(batch)) * ndw for (w, ndw) in zip(self.weights, w_change)]
+    self.biases = [b - (alpha / len(batch)) * ndb for (b, ndb) in zip(self.biases, b_change)]
+```
+
+The final part, the training process which combines all the methods presented and with the help of a dataset, "learns" to recognize patterns in the data.
+So, we have the ```train``` method which takes the inputs: a train set, the number of epochs, the learning rate, the batch size and a test set.
+
+So we iterate through the train set for a number of times equal to the epochs variable. Before anything, we shuffle the data, we split the data in batches and for each batch we apply the ```update_batch``` method, which is explained earlier. To see some results after each epoch, we apply the current NN on the test set to see how it behaves, to know if it increased in accuracy since the last epoch, or it is equal or worse. But, if it increased it means it is learning and now we can change some things like the hyper-parameteres or the layout to try and increase the accuracy.
+
+```python
+def train(self, train_set, epochs, alpha, batch_size, test_set):
+    for i in range(epochs):
+        random.shuffle(train_set)
+        batches = [train_set[k:k+batch_size] for k in range(0, len(train_set), batch_size)]
+        for batch in batches:
+          self.update_batch(batch, alpha)
+        result = 0
+        for x, y in test_set:
+           output = self.feedforward(x)
+           result += int(np.argmax(output) == y)
+        print("Epoch {0}: {1} / {2}".format(i + 1, result, len(test_set)))
+```
+
+After this, my network has two more methods, a ```save``` and ```load```. With save, we give it a .txt file in which it will write it's layout and the values for the weights and biases so we can use it on other machines. With load, we take all the information from the .txt file that we give it and the network copies all the info from that file, and so it will be a copy of the one we saved on that file. I won't put the code here because it is very long and the readme is already pretty long. 
+
 ---
 
 <h2>Some resources that helped me in understanding more about NN:</h2>
